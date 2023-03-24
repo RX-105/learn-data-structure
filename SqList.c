@@ -107,6 +107,11 @@ void SqListFromArray(SqList *list, ElemType *data, int length)
     }
 }
 
+void SqListDestroy(SqList *list)
+{
+    free(list->data);
+}
+
 // 题目算法
 
 // 2.2.3 二.01
