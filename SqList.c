@@ -289,3 +289,84 @@ void SwapOrInsert(SqList *list, ElemType x)
         list->data[idx + 1] = temp;
     }
 }
+
+// 2.2.3 二.10 [2010年统考真题]
+// 参考二.08
+
+// 2.2.3 二.11 [2011年统考真题]
+// 在两个等长的升序数组中寻找合并后的中位数（即array[length/2]），要求尽可能时间空间都高效
+ElemType FindIntermediate(int *arr1, int *arr2, int length)
+{
+    int l1 = 0, l2 = 0, h1 = length - 1, h2 = length - 1;
+    int m1, m2;
+    // 这个条件表示双方数组都只剩下一个元素，不满足条件之后就在两个数之间取更大的数即为结果
+    while (h1 - l1 != 0 && h2 - l2 != 0)
+    {
+        // 表示当前中位数下标
+        m1 = (h1 - l1 + 1) / 2;
+        m2 = (h2 - l2 + 1) / 2;
+        // 判断当前中位数大小
+        if (arr1[l1 + m1] < arr2[l2 + m2])
+        {
+            // 如果a1比a2小，取a1的后半、a2的前半
+            l1 += m1;
+            h2 -= m2;
+        }
+        else
+        {
+            // 如果a1比a2大，取a1的前半、a2的后半
+            h1 -= m1;
+            l2 += m2;
+        }
+    }
+    return arr1[l1] > arr2[l2] ? arr1[l1] : arr2[l2];
+}
+
+// 2.2.3 二.12 [2013年统考真题]
+// 在一个升序数组中寻找众数，且数量大于length/2，没有则返回-1
+ElemType FindMostOccurence(int *arr, int length)
+{
+    // 默认元素为第一个，计数器置为1
+    ElemType elem = arr[0];
+    int cnt = 1, idx = 1;
+    while (idx < length)
+    {
+        // 对于相同元素，计数器加一，否则减一
+        if (arr[idx] == elem)
+            cnt++;
+        else
+            cnt--;
+        // 如果计数器小于0，则把当前元素保存下来，重置计数器
+        if (cnt < 0)
+        {
+            elem = arr[idx];
+            cnt = 1;
+        }
+        idx++;
+    }
+    // 重新统计元素的真正出现次数
+    cnt = 0;
+    for (idx = 0; idx < length; idx++)
+    {
+        if (arr[idx] == elem)
+            cnt++;
+    }
+    return cnt > length / 2 ? elem : -1;
+}
+
+// 2.2.3 二.13 [2018年统考真题]
+// 在一个数组中寻找没出现过的最小正整数，要求时间上尽可能高效
+ElemType FindMinInt(int *arr, int length)
+{
+    int occurence[__INT16_MAX__] = {0};
+    for (int idx = 0; idx < length; idx++)
+    {
+        if (arr[idx] >= 0)
+            occurence[arr[idx]]++;
+    }
+    for (int idx = 1; idx < __INT16_MAX__; idx++)
+    {
+        if (occurence[idx] == 0)
+            return idx;
+    }
+}

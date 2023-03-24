@@ -37,3 +37,9 @@ void SqListMerge(SqList *list1, SqList *list2, SqList *list);
 void ArraySwap(SqList *A, int m, int n);
 
 void SwapOrInsert(SqList *list, ElemType x);
+
+ElemType FindIntermediate(int *arr1, int *arr2, int length);
+
+ElemType FindMostOccurence(int *arr, int length);
+
+ElemType FindMinInt(int *arr, int length);
