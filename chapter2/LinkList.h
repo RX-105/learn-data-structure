@@ -1,4 +1,4 @@
-#include "commons.h"
+#include "../commons.h"
 
 typedef struct LNode {
     ElemType data;
