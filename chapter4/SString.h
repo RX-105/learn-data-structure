@@ -18,5 +18,7 @@ int StrLength(SString *S);
 void SubString(SString *src, SString *dest, int pos, int length);
 void ConCat(SString *dest, SString *src1, SString *src2);
 int Index(SString *S, SString *T);
+void GetNext(SString *T, int *next);
+int Index_KMP(SString *S, SString *T, int *next);
 void ClearString(SString *T);
 void DestroyString(SString *T);

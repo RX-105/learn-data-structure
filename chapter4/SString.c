@@ -1,6 +1,7 @@
 #include "SString.h"
 #include "string.h"
 #include "stdlib.h"
+#include "stdio.h"
 
 void StrAssign(SString *S, char *chars, int length)
 {
@@ -63,6 +64,46 @@ int Index(SString *S, SString *T)
     }
     if (j >= T->length)
         return i - T->length;
+    else
+        return 0;
+}
+void GetNext(SString *T, int *next)
+{
+    int i = 0, j = -1;
+    next[0] = -1;
+    while (i < T->length)
+    {
+        if (j == -1 || T->ch[i] == T->ch[j])
+        {
+            i++;
+            j++;
+            if (T->ch[i]!=T->ch[j])
+                next[i] = j;
+            else
+                next[i] = next[j];
+        }
+        else
+        {
+            j = next[j];
+        }
+    }
+}
+int Index_KMP(SString *S, SString *T, int *next)
+{
+    GetNext(S, next);
+    int i = 0, j = 0;
+    while (i < S->length && j < T->length)
+    {
+        if (j == 0 || S->ch[i] == T->ch[j])
+        {
+            i++;
+            j++;
+        }
+        else
+            j = next[j];
+    }
+    if (j >= T->length)
+        return i-T->length;
     else
         return 0;
 }
