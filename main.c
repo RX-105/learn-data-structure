@@ -9,12 +9,15 @@ int main()
     // Initialization
     SString master;
     SString pattern;
-    StrAssign(&master, "ababcabcacbab", 13);
-    StrAssign(&pattern, "abcac", 5);
+    StrAssign(&master, "abaabcaba", 9);
+    StrAssign(&pattern, "abcab", 5);
+    int next[9] = {0};
 
     // Operations
-    printf("Index at: %d\n", Index(&master, &pattern));
+    // GetNext(&master, next);
 
     // Output
+    printf("Index at: %d\n", Index(&master, &pattern));
+    printf("(KMP)Index at: %d\n", Index_KMP(&master, &pattern, next));
     return 0;
 }
