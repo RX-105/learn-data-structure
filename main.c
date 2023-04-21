@@ -8,25 +8,15 @@
 int main()
 {
     // Initialization
-    SqStack st;
-    InitStack(&st);
+    LinkList l = NULL;
+    int arr[6] = {6,5,4,3,2,1};
+    l = LinkListTailInit(l, 6, arr);
 
     // Operations
-    Push(&st, 1);
-    Push(&st, 2);
-    Push(&st, 3);
-    Push(&st, 4);
+    InsertSort(l);
 
     // Output
-    int tmp;
-    Pop(&st, &tmp);
-    printf("Pop: %d\n", tmp);
-    Pop(&st, &tmp);
-    printf("Pop: %d\n", tmp);
-    Pop(&st, &tmp);
-    printf("Pop: %d\n", tmp);
-    Pop(&st, &tmp);
-    printf("Pop: %d\n", tmp);
+    LinkListPrint(l);
 
     return 0;
 }
