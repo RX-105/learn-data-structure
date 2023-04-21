@@ -10,3 +10,7 @@ int StackEmpty(SqStack *st);
 int Push(SqStack *st, int x);
 int Pop(SqStack *st, int *x);
 int GetTop(SqStack *st, int *x);
+
+int PatternTest(char *seq, int len);
+
+// int IsSymmetric(LinkList list, int n);
