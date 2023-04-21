@@ -1,2 +1,7 @@
 target
 .vscode
+build
+CMakeFiles
+*.exe
+CMake*.*
+.idea
