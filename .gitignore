@@ -3,5 +3,6 @@ target
 build
 CMakeFiles
 *.exe
-CMake*.*
+CMakeCache.txt
+cmake_install.cmake
 .idea
