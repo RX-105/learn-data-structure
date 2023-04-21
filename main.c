@@ -1,5 +1,6 @@
 #include "chapter2/SqList.h"
 #include "chapter2/LinkList.h"
+#include "chapter3/SqStack.h"
 #include "chapter4/SString.h"
 #include "stdio.h"
 #include "string.h"
@@ -7,17 +8,25 @@
 int main()
 {
     // Initialization
-    SString master;
-    SString pattern;
-    StrAssign(&master, "abaabcaba", 9);
-    StrAssign(&pattern, "abcab", 5);
-    int next[9] = {0};
+    SqStack st;
+    InitStack(&st);
 
     // Operations
-    // GetNext(&master, next);
+    Push(&st, 1);
+    Push(&st, 2);
+    Push(&st, 3);
+    Push(&st, 4);
 
     // Output
-    printf("Index at: %d\n", Index(&master, &pattern));
-    printf("(KMP)Index at: %d\n", Index_KMP(&master, &pattern, next));
+    int tmp;
+    Pop(&st, &tmp);
+    printf("Pop: %d\n", tmp);
+    Pop(&st, &tmp);
+    printf("Pop: %d\n", tmp);
+    Pop(&st, &tmp);
+    printf("Pop: %d\n", tmp);
+    Pop(&st, &tmp);
+    printf("Pop: %d\n", tmp);
+
     return 0;
 }
