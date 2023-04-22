@@ -7,9 +7,9 @@ typedef struct LNode {
     struct LNode *next;
 } LNode, *LinkList;
 
-LinkList LinkListHeadInit(LinkList list, int size, int *initialContent);
+LinkList LinkListHeadInit(LinkList list, int size, const int *initialContent);
 
-LinkList LinkListTailInit(LinkList list, int size, int *initialContent);
+LinkList LinkListTailInit(LinkList list, int size, const int *initialContent);
 
 void LinkListPrint(LinkList list);
 
@@ -17,10 +17,20 @@ void RemoveByValue(LinkList list, int x);
 
 void ReversePrint(LinkList l);
 
+int LinkListLength(LinkList l);
+
 void RemoveMinimum(LinkList l);
 
 void InPlaceReverse(LinkList l);
 
 void InsertSort(LinkList l);
+
+void RemoveByRange(LinkList l, int from, int to);
+
+LNode* FindPublicNode(LinkList l1, LinkList l2);
+
+void AscendPrintAndFree(LinkList l);
+
+void SplitListByOdds(LinkList l1, LinkList l2);
 
 #endif
