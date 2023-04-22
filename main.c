@@ -5,18 +5,21 @@
 #include "stdio.h"
 #include "string.h"
 
-int main()
-{
+int main() {
     // Initialization
     LinkList l = NULL;
-    int arr[6] = {6,5,4,3,2,1};
+    LinkList l2 = NULL;
+    int arr[6] = {6, 5, 4, 3, 2, 1};
+    int arr2[6] = {1, 2, 3, 3, 2, 1};
     l = LinkListTailInit(l, 6, arr);
+    l2 = LinkListTailInit(l2, 6, arr2);
 
     // Operations
-    InsertSort(l);
+    SplitListByOdds(l, l2);
 
     // Output
     LinkListPrint(l);
+    LinkListPrint(l2);
 
     return 0;
 }
