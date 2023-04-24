@@ -225,4 +225,108 @@ void SplitListByOdds(LinkList l1, LinkList l2) {
     h2->next = NULL;
 }
 
+// 11
+// 将[a1, b1, a2, b2, ..., an, bn]拆分成[a1, a2, ..., an]和[bn, ..., b2, b1]
+void SplitList(LinkList l1, LinkList l2) {
+    // 思路和上一道题类似，只不过a表用尾插法，b表用头插法
+    int idx = 0;
+    LNode *p1 = l1->next, *h1 = l1, *next;
+    l1->next = NULL; // 断开头节点和下一个节点，产生新的链表
+    l2->next = NULL;
+    while (p1!=NULL){
+        next = p1->next;
+        if (idx%2==0){
+            // 用尾插法加入到l1中
+            p1->next = h1->next;
+            h1->next = p1;
+            h1=p1;
+        } else {
+            // 用头插法加入到l2中
+            p1->next = l2->next;
+            l2->next = p1;
+        }
+        p1=next;
+        idx++;
+    }
+}
+
+// 12
+// 列表去重
+void Deduplicate(LinkList l) {
+    LNode *p = l->next;
+    while (p!=NULL){
+        if (p->next!=NULL && p->next->data == p->data){
+            LNode *t = p->next;
+            p->next = t->next;
+            free(t);
+        } else {
+            p=p->next;
+        }
+    }
+}
+
+// 13
+// 合并两个有序的链表，新链表使用原来的节点，数据仍然保持有序
+void LinkListMerge(LinkList l1, LinkList l2) {
+    // 既然想要保持原来顺序，就得在新表上用尾插法
+    LNode *p1 = l1->next, *p2 = l2->next;
+    LNode *head = l1, *t;
+    l1->next = NULL;
+    // ???
+    while (p1!=NULL && p2!=NULL) {
+        if (p1->data <= p2->data) {
+            t = p1->next;
+            p1->next = head->next;
+            head->next = p1;
+            head = p1;
+            p1 = t;
+        } else {
+            t = p2->next;
+            p2->next = head->next;
+            head->next = p2;
+            head = p2;
+            p2=t;
+        }
+    }
+    // 检查剩余的元素，并插入到新表
+    while (p1!=NULL) {
+        t = p1->next;
+        p1->next = head->next;
+        head->next = p1;
+        head = p1;
+        p1 = t;
+    }
+    while (p2!=NULL) {
+        t = p2->next;
+        p2->next = head->next;
+        head->next = p2;
+        head = p2;
+        p2=t;
+    }
+}
+
+// 14
+// 从两个升序排序的链表中提取公共节点（只需要值相等，不需要内存地址相等）
+LinkList GetPublicNodes(LinkList l1, LinkList l2) {
+    LinkList out = (LinkList) malloc(sizeof(LinkList));
+    LNode *p1 = l1->next, *p2 = l2->next, *pO = out;
+    out->next = NULL;
+    while (p1!=NULL && p2!=NULL) {
+        if (p1->data == p2->data) {
+            LNode *node = (LNode*) malloc(sizeof(LNode));
+            node->data = p1->data;
+            node->next = pO->next;
+            pO->next = node;
+            pO=node;
+            p1=p1->next;
+            p2=p2->next;
+        } else if (p1->data > p2->data) {
+            p2=p2->next;
+        } else {
+            p1=p1->next;
+        }
+    }
+    return out;
+}
+
 

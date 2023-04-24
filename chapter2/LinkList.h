@@ -33,4 +33,12 @@ void AscendPrintAndFree(LinkList l);
 
 void SplitListByOdds(LinkList l1, LinkList l2);
 
+void SplitList(LinkList l1, LinkList l2);
+
+void Deduplicate(LinkList l);
+
+void LinkListMerge(LinkList l1, LinkList l2);
+
+LinkList GetPublicNodes(LinkList l1, LinkList l2);
+
 #endif
