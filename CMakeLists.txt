@@ -12,4 +12,4 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_library(C3_LIB ${C3_DIRS})
 #add_library(C4_LIB ${C4_DIRS})
 
-add_executable(main.exe main.c chapter2/LinkList.c chapter2/SqList.c chapter3/SqStack.c chapter4/SString.c)
+add_executable(main main.c chapter2/LinkList.c chapter2/SqList.c chapter3/SqStack.c chapter4/SString.c)
