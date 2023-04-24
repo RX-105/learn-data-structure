@@ -116,24 +116,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main.exe
+# Target rules for targets named main
 
 # Build rule for target.
-main.exe: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 main.exe
-.PHONY : main.exe
+main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 main
+.PHONY : main
 
 # fast build rule for target.
-main.exe/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/build
-.PHONY : main.exe/fast
+main/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
 
 chapter2/LinkList.obj: chapter2/LinkList.c.obj
 .PHONY : chapter2/LinkList.obj
 
 # target to build an object file
 chapter2/LinkList.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter2/LinkList.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter2/LinkList.c.obj
 .PHONY : chapter2/LinkList.c.obj
 
 chapter2/LinkList.i: chapter2/LinkList.c.i
@@ -141,7 +141,7 @@ chapter2/LinkList.i: chapter2/LinkList.c.i
 
 # target to preprocess a source file
 chapter2/LinkList.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter2/LinkList.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter2/LinkList.c.i
 .PHONY : chapter2/LinkList.c.i
 
 chapter2/LinkList.s: chapter2/LinkList.c.s
@@ -149,7 +149,7 @@ chapter2/LinkList.s: chapter2/LinkList.c.s
 
 # target to generate assembly for a file
 chapter2/LinkList.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter2/LinkList.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter2/LinkList.c.s
 .PHONY : chapter2/LinkList.c.s
 
 chapter2/SqList.obj: chapter2/SqList.c.obj
@@ -157,7 +157,7 @@ chapter2/SqList.obj: chapter2/SqList.c.obj
 
 # target to build an object file
 chapter2/SqList.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter2/SqList.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter2/SqList.c.obj
 .PHONY : chapter2/SqList.c.obj
 
 chapter2/SqList.i: chapter2/SqList.c.i
@@ -165,7 +165,7 @@ chapter2/SqList.i: chapter2/SqList.c.i
 
 # target to preprocess a source file
 chapter2/SqList.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter2/SqList.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter2/SqList.c.i
 .PHONY : chapter2/SqList.c.i
 
 chapter2/SqList.s: chapter2/SqList.c.s
@@ -173,7 +173,7 @@ chapter2/SqList.s: chapter2/SqList.c.s
 
 # target to generate assembly for a file
 chapter2/SqList.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter2/SqList.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter2/SqList.c.s
 .PHONY : chapter2/SqList.c.s
 
 chapter3/SqStack.obj: chapter3/SqStack.c.obj
@@ -181,7 +181,7 @@ chapter3/SqStack.obj: chapter3/SqStack.c.obj
 
 # target to build an object file
 chapter3/SqStack.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter3/SqStack.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter3/SqStack.c.obj
 .PHONY : chapter3/SqStack.c.obj
 
 chapter3/SqStack.i: chapter3/SqStack.c.i
@@ -189,7 +189,7 @@ chapter3/SqStack.i: chapter3/SqStack.c.i
 
 # target to preprocess a source file
 chapter3/SqStack.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter3/SqStack.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter3/SqStack.c.i
 .PHONY : chapter3/SqStack.c.i
 
 chapter3/SqStack.s: chapter3/SqStack.c.s
@@ -197,7 +197,7 @@ chapter3/SqStack.s: chapter3/SqStack.c.s
 
 # target to generate assembly for a file
 chapter3/SqStack.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter3/SqStack.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter3/SqStack.c.s
 .PHONY : chapter3/SqStack.c.s
 
 chapter4/SString.obj: chapter4/SString.c.obj
@@ -205,7 +205,7 @@ chapter4/SString.obj: chapter4/SString.c.obj
 
 # target to build an object file
 chapter4/SString.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter4/SString.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter4/SString.c.obj
 .PHONY : chapter4/SString.c.obj
 
 chapter4/SString.i: chapter4/SString.c.i
@@ -213,7 +213,7 @@ chapter4/SString.i: chapter4/SString.c.i
 
 # target to preprocess a source file
 chapter4/SString.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter4/SString.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter4/SString.c.i
 .PHONY : chapter4/SString.c.i
 
 chapter4/SString.s: chapter4/SString.c.s
@@ -221,7 +221,7 @@ chapter4/SString.s: chapter4/SString.c.s
 
 # target to generate assembly for a file
 chapter4/SString.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/chapter4/SString.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/chapter4/SString.c.s
 .PHONY : chapter4/SString.c.s
 
 main.obj: main.c.obj
@@ -229,7 +229,7 @@ main.obj: main.c.obj
 
 # target to build an object file
 main.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/main.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/main.c.obj
 .PHONY : main.c.obj
 
 main.i: main.c.i
@@ -237,7 +237,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -245,7 +245,7 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.exe.dir\build.make CMakeFiles/main.exe.dir/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/main.c.s
 .PHONY : main.c.s
 
 # Help Target
@@ -256,7 +256,7 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... main.exe
+	@echo ... main
 	@echo ... chapter2/LinkList.obj
 	@echo ... chapter2/LinkList.i
 	@echo ... chapter2/LinkList.s
