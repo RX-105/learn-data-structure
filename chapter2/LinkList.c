@@ -31,6 +31,37 @@ LinkList LinkListTailInit(LinkList list, int size, const int *initialContent) {
     return list;
 }
 
+DLinkList DLinkListTailInit(DLinkList list, int size, const int *initialContent) {
+    list = (DLinkList) malloc(sizeof(DLinkList));
+    list->next = NULL;
+    list->prior = NULL;
+    DNode *p = list;
+    for (int i = 0; i < size; ++i) {
+        DNode *node = (DNode*) malloc(sizeof(DNode*));
+        node->data = initialContent[i];
+        node->next = p->next;
+        node->prior = p;
+        p->next = node;
+        p=node;
+    }
+    return list;
+}
+
+void DLinkListPrint(DLinkList l) {
+    DNode *p = l->next;
+    if (l->next == NULL) {
+        printf("DLinkList: []\n");
+        return;
+    }
+    p = l->next;
+    printf("DLinkList: [");
+    while (p != NULL) {
+        printf("%d ", p->data);
+        p = p->next;
+    }
+    printf("\b]\n");
+}
+
 void LinkListPrint(LinkList list) {
     LNode *node;
     if (list->next == NULL) {
@@ -205,20 +236,20 @@ void SplitListByOdds(LinkList l1, LinkList l2) {
     LNode *p = l1->next, *t = NULL;
     LNode *h1 = l1, *h2 = l2;
     l1->next = NULL;
-    l2->next=NULL;
+    l2->next = NULL;
     int idx = 0;
     while (p != NULL) {
-        t=p->next;
-        if (idx%2==0){
-            p->next=h1->next;
+        t = p->next;
+        if (idx % 2 == 0) {
+            p->next = h1->next;
             h1->next = p;
-            h1=p;
+            h1 = p;
         } else {
-            p->next=h2->next;
+            p->next = h2->next;
             h2->next = p;
-            h2=p;
+            h2 = p;
         }
-        p=t;
+        p = t;
         idx++;
     }
     h1->next = NULL;
@@ -233,19 +264,19 @@ void SplitList(LinkList l1, LinkList l2) {
     LNode *p1 = l1->next, *h1 = l1, *next;
     l1->next = NULL; // 断开头节点和下一个节点，产生新的链表
     l2->next = NULL;
-    while (p1!=NULL){
+    while (p1 != NULL) {
         next = p1->next;
-        if (idx%2==0){
+        if (idx % 2 == 0) {
             // 用尾插法加入到l1中
             p1->next = h1->next;
             h1->next = p1;
-            h1=p1;
+            h1 = p1;
         } else {
             // 用头插法加入到l2中
             p1->next = l2->next;
             l2->next = p1;
         }
-        p1=next;
+        p1 = next;
         idx++;
     }
 }
@@ -254,13 +285,13 @@ void SplitList(LinkList l1, LinkList l2) {
 // 列表去重
 void Deduplicate(LinkList l) {
     LNode *p = l->next;
-    while (p!=NULL){
-        if (p->next!=NULL && p->next->data == p->data){
+    while (p != NULL) {
+        if (p->next != NULL && p->next->data == p->data) {
             LNode *t = p->next;
             p->next = t->next;
             free(t);
         } else {
-            p=p->next;
+            p = p->next;
         }
     }
 }
@@ -272,8 +303,7 @@ void LinkListMerge(LinkList l1, LinkList l2) {
     LNode *p1 = l1->next, *p2 = l2->next;
     LNode *head = l1, *t;
     l1->next = NULL;
-    // ???
-    while (p1!=NULL && p2!=NULL) {
+    while (p1 != NULL && p2 != NULL) {
         if (p1->data <= p2->data) {
             t = p1->next;
             p1->next = head->next;
@@ -285,23 +315,23 @@ void LinkListMerge(LinkList l1, LinkList l2) {
             p2->next = head->next;
             head->next = p2;
             head = p2;
-            p2=t;
+            p2 = t;
         }
     }
     // 检查剩余的元素，并插入到新表
-    while (p1!=NULL) {
+    while (p1 != NULL) {
         t = p1->next;
         p1->next = head->next;
         head->next = p1;
         head = p1;
         p1 = t;
     }
-    while (p2!=NULL) {
+    while (p2 != NULL) {
         t = p2->next;
         p2->next = head->next;
         head->next = p2;
         head = p2;
-        p2=t;
+        p2 = t;
     }
 }
 
@@ -311,22 +341,68 @@ LinkList GetPublicNodes(LinkList l1, LinkList l2) {
     LinkList out = (LinkList) malloc(sizeof(LinkList));
     LNode *p1 = l1->next, *p2 = l2->next, *pO = out;
     out->next = NULL;
-    while (p1!=NULL && p2!=NULL) {
+    while (p1 != NULL && p2 != NULL) {
         if (p1->data == p2->data) {
-            LNode *node = (LNode*) malloc(sizeof(LNode));
+            LNode *node = (LNode *) malloc(sizeof(LNode));
             node->data = p1->data;
             node->next = pO->next;
             pO->next = node;
-            pO=node;
-            p1=p1->next;
-            p2=p2->next;
+            pO = node;
+            p1 = p1->next;
+            p2 = p2->next;
         } else if (p1->data > p2->data) {
-            p2=p2->next;
+            p2 = p2->next;
         } else {
-            p1=p1->next;
+            p1 = p1->next;
         }
     }
     return out;
+}
+
+
+// 15
+// 这道题和上一道题类似，略
+
+// 16
+// 判断B表是否是A表的连续子序列
+int IsSublist(LinkList A, LinkList B) {
+    // 类似于字符串匹配算法，不过这里就不用KMP了
+    // 对两个表分别设置工作指针，对A表额外设置一个回落指针
+    // 同时对两个表进行遍历，判断内容相等时同步后移，不相等时A工作指针设置为回落指针的下一个节点（同时回落指针后移）
+    // 然后将B工作指针设置为开头，再次开始遍历，直到B工作指针抵达末端
+    // 结束时判断B工作指针是否指向最后一个节点，以此作为判断条件
+    LNode *pA = A->next, *pB = B->next, *fb = A->next;
+    while (pA && pB) {
+        if (pA->data == pB->data) {
+            pA = pA->next;
+            pB = pB->next;
+        } else {
+            fb = fb->next;
+            pA = fb;
+            pB = B->next;
+        }
+    }
+    if (pB == NULL) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+// 21
+// 判断给定的单链表是否存在环。环指的是尾节点指向链表中的某个节点，正常情况下它应该指向NULL
+int ContainsRing(LinkList l) {
+    LNode *slow = l, *fast = l;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if(slow == fast) {
+            return 1;
+        }
+    }
+    if (fast == NULL && fast->next == NULL) {
+        return 0;
+    }
 }
 
 

@@ -7,17 +7,28 @@ typedef struct LNode {
     struct LNode *next;
 } LNode, *LinkList;
 
+typedef struct DNode {
+    ElemType data;
+    struct DNode *prior, *next;
+} DNode, *DLinkList;
+
 LinkList LinkListHeadInit(LinkList list, int size, const int *initialContent);
 
 LinkList LinkListTailInit(LinkList list, int size, const int *initialContent);
 
 void LinkListPrint(LinkList list);
 
-void RemoveByValue(LinkList list, int x);
+DLinkList DLinkListTailInit(DLinkList list, int size, const int *initialContent);
+
+void DLinkListPrint(DLinkList l);
 
 void ReversePrint(LinkList l);
 
 int LinkListLength(LinkList l);
+
+// 章节习题从这里开始
+
+void RemoveByValue(LinkList list, int x);
 
 void RemoveMinimum(LinkList l);
 
@@ -40,5 +51,9 @@ void Deduplicate(LinkList l);
 void LinkListMerge(LinkList l1, LinkList l2);
 
 LinkList GetPublicNodes(LinkList l1, LinkList l2);
+
+int IsSublist(LinkList A, LinkList B);
+
+int ContainsRing(LinkList l);
 
 #endif
