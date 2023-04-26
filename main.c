@@ -10,16 +10,18 @@ int main() {
     LinkList l = NULL;
     LinkList l2 = NULL;
     int arr[6] = {1,2,3,4,5,6};
-    int arr2[6] = {4,5,6,7,8,9};
+    int arr2[3] = {2,2,3};
     l = LinkListTailInit(l, 6, arr);
-    l2 = LinkListTailInit(l2, 6, arr2);
+    l2 = LinkListTailInit(l2, 3, arr2);
 
     // Operations
-    l = GetPublicNodes(l, l2);
+    // 手动构造一个含环的链表
+    l2->next->next->next->next = l2->next->next;
+    int res = ContainsRing(l2);
 
     // Output
     LinkListPrint(l);
-//    LinkListPrint(l2);
+    printf("Contains ring: %d\n", res);
 
     return 0;
 }
