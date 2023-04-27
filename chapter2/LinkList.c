@@ -1,10 +1,10 @@
+#include <string.h>
 #include "stdio.h"
 #include "stdlib.h"
 #include "LinkList.h"
 
 LinkList LinkListHeadInit(LinkList list, int size, const int *initialContent) {
     LNode *node;
-    int idx;
     list = (LinkList) malloc(sizeof(LNode));
     list->next = NULL;
     for (int i = 0; i < size; i++) {
@@ -31,18 +31,35 @@ LinkList LinkListTailInit(LinkList list, int size, const int *initialContent) {
     return list;
 }
 
+LinkList LinkListFromStdin(LinkList list) {
+    int val;
+    list = (LinkList) malloc(sizeof(LinkList));
+    LNode *rear = list, *node;
+    rear->next = NULL;
+    scanf("%d", &val);
+    while (val != -1) {
+        node = (LNode *) malloc(sizeof(LNode *));
+        node->data = val;
+        rear->next = node;
+        rear = node;
+        scanf("%d", &val);
+    }
+    rear->next = NULL;
+    return list;
+}
+
 DLinkList DLinkListTailInit(DLinkList list, int size, const int *initialContent) {
     list = (DLinkList) malloc(sizeof(DLinkList));
     list->next = NULL;
     list->prior = NULL;
     DNode *p = list;
     for (int i = 0; i < size; ++i) {
-        DNode *node = (DNode*) malloc(sizeof(DNode*));
+        DNode *node = (DNode *) malloc(sizeof(DNode *));
         node->data = initialContent[i];
         node->next = p->next;
         node->prior = p;
         p->next = node;
-        p=node;
+        p = node;
     }
     return list;
 }
@@ -396,13 +413,162 @@ int ContainsRing(LinkList l) {
     while (fast && fast->next) {
         slow = slow->next;
         fast = fast->next->next;
-        if(slow == fast) {
+        if (slow == fast) {
             return 1;
         }
     }
     if (fast == NULL && fast->next == NULL) {
         return 0;
+    } else {
+        return -1;
     }
 }
 
+// 22 2009统考真题
+// 给定单链表的头指针，查找链表中倒数第idx位置上的元素，如果存在就输出其值并返回1，否则返回0
+// 不能改变链表结构，要求算法尽可能高效
+int HasLastIndex(LinkList l, int idx) {
+    // 1. 通过数组来实现对链表的随机访问
+    // 2. 遍历整个链表，并把数值保存到一个数组中。遍历完毕后，判断链表长度是否满足idx，如果满足，则输出下标length-idx上的元素
+    // 3. 如下
+//    int data[0x7fff] = {0};
+//    LNode *p = l->next;
+//    int length = 0;
+//    while (p) {
+//        data[length++]=p->data;
+//        p=p->next;
+//    }
+//    if (length>idx) {
+//        printf("Last index at %d: %d\n", idx, data[length-idx]);
+//        return 1;
+//    } else {
+//        return 0;
+//    }
+    // 这种解法的空间复杂度过高，只能得10分。下面是参考答案
+    // 设置两个指针。指针1先行遍历，等到指针1遍历到第idx个节点时指针2开始遍历。
+    // 指针1遍历完毕时指针2正指向倒数第idx个节点
+    LNode *p1 = l->next, *p2 = l->next;
+    int ptr = 0;
+    while (p1) {
+        if (ptr >= idx) {
+            p1 = p1->next;
+            p2 = p2->next;
+        } else {
+            p1 = p1->next;
+        }
+        ptr++;
+    }
+    if (ptr >= idx - 1) {
+        printf("Last index at %d: %d\n", idx, p2->data);
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
+// 23 2012统考真题
+// 对于loading和being两个词，他们具有相同的后缀ing，如果使用单链表保存这两个单词，相同后缀可以共用。
+// 编写一个算法，查找相同后缀的开始节点，要求时间上尽可能高效
+LNode *FindCommonSuffix(LinkList A, LinkList B) {
+    // 解题思路：长表的指针先遍历长表长度减短表长度次，然后同步遍历两个链表，对剩下部分进行匹配
+    //   这道题还有另一种思路。题目要求尽可能时间上高效，那么先把两表的数据复制到两个数组中，然后
+    //   进行反向遍历，第一次失配位置的上一个位置就是题目要求的节点
+    // 注：参考答案在同步遍历中查找到地址相同的节点即为返回值，但考虑到共用部分节点的两个链表构造起来
+    //   比较麻烦，因此这个解法以值为标准查找共同后缀
+    int la = LinkListLength(A), lb = LinkListLength(B), idx = 0;
+    LNode *pA = A->next, *pB = B->next, *fA, *fB;
+    if (la > lb) {
+        while (idx != la - lb) {
+            pA = pA->next;
+            idx++;
+        }
+    } else {
+        while (idx != lb - la) {
+            pB = pB->next;
+            idx++;
+        }
+    }
+    fA = pA;
+    fB = pB;
+    while (pA && pB) {
+        if (pA->data == pB->data) { // 参考答案在这里的判断条件是pA == pB，然后将其返回
+            pA = pA->next;
+            pB = pB->next;
+        } else {
+            fA = fA->next;
+            fB = fB->next;
+            pA = fA;
+            pB = fB;
+        }
+    }
+    if (pA == NULL && pB == NULL) {
+        return fA;
+    } else {
+        return NULL;
+    }
+}
+
+// 24 2015统考真题
+// 使用单链表保存m个整数，将该单链表中节点值绝对值相等的节点移除，只保留第一次出现的节点
+void DeduplicateWithAbs(LinkList l, unsigned m) {
+    int flag[m];
+    // 分配数组空间并置0
+    memset(flag, 0, m * sizeof(int));
+    LNode *p = l->next;
+    while (p) {
+        if (flag[abs(p->data)] == 0) {
+            // 以数值绝对值作为下标，如果下标所在值为0，说明该元素第一次访问，并置1以表示已访问
+            flag[abs(p->data)] = 1;
+        } else {
+            // 不等于0时，将该节点移除并释放内存空间
+            LNode *next = p->next;
+            if (!next) {
+                p = NULL;
+            } else {
+                p->data = next->data;
+                p->next = next->next;
+                free(next);
+            }
+        }
+        p = p->next;
+    }
+}
+
+// 25 2019统考真题
+// 给定单链表，内容为a1, a2, a3, ..., an，将该链表重排成a1, an, a2, an-1, ...，
+// 要求空间复杂度为O(1)，且时间上尽可能高效
+void LinkListRearrange(LinkList l) {
+    int length = LinkListLength(l);
+    // 先将后半元素就地逆置，然后将后半部分元素以此插入前半部分
+    // 快慢指针同步遍历。快指针每次走两步，慢指针每次走一步。当快指针到达链表末端时，慢指针
+    // 位于链表中部
+    LNode *fast = l, *slow = l, *next, *mid;
+    while (fast->next) {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    mid = slow;
+    // 以尾节点作为头节点，将后半链表进行头插法建表。front表示中间节点的前一个节点，也就
+    // 是前半部分链表的尾节点
+    next = slow->next;
+    slow->next = fast;
+    slow = next;
+    while (slow!=fast) {
+        next = slow->next;
+        slow->next = fast->next;
+        fast->next = slow;
+        slow = next;
+    }
+    // 这个时候，fast是中部元素的开始，mid是前半列表的尾节点。
+    slow = l->next;
+    while (fast) {
+        next = fast->next;
+        mid->next = fast->next;
+        fast->next = slow->next;
+        slow->next = fast;
+        slow = fast->next;
+        fast = next;
+    }
+}
+
+// 枯了。真题一年比一年难了😥
