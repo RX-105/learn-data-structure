@@ -4,34 +4,23 @@
 #include "chapter4/SString.h"
 #include "stdio.h"
 
-int sqlist_insert(SqList *list, int index, int data){
-    int tmp, i = index;
-    if (index > list->length){
-        return -1;
-    }
-    else{
-        while (i < list->length){
-            tmp = list->data[i];
-            list->data[i] = data;
-            i++;
-            data = tmp;
-        }
-        return 0;
-    }
+#define QUEUE_SIZE 100
+typedef struct {
+    int data[QUEUE_SIZE];
+    int rear, front;
+} SqQueue;
+
+int EnQueue(SqQueue *q, int x) {
+    if(q->rear == QUEUE_SIZE) return -1;
+    q->data[q->rear] = x;
+    q->rear++;
+    return 0;
 }
 
-int sqlist_delete_first(SqList *list) {
-    if (list->length == 0) {
-        return -1;
-    } else {
-        int i = 0;
-        while (i < list->length) {
-            list->data[i] = list->data[i];
-            i++;
-        }
-        list->length--;
-        return 0;
-    }
+int DeQueue(SqQueue *q, int *x) {
+    if (q->front == q->rear) return -1;
+    *x = q->data[q->front];
+    return 0;
 }
 
 int main() {
@@ -46,10 +35,6 @@ int main() {
 
     // Operations
 //    LinkListRearrange(l);
-    SqListPrint(&l3);
-    sqlist_insert(&l3, 1, 10);
-    sqlist_delete_first(&l3);
-    SqListPrint(&l3);
 
     // Output
 //    LinkListPrint(l);
