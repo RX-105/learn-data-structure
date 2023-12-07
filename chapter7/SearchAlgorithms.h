@@ -1,0 +1,7 @@
+#ifndef LEARN_DATA_STRUCTURE_CHAPTER7_SEARCHALGORITHMS_H_
+#define LEARN_DATA_STRUCTURE_CHAPTER7_SEARCHALGORITHMS_H_
+
+int SearchSeq(int A[], int n, int key);
+int BinarySearch(int A[], int n, int key);
+
+#endif //LEARN_DATA_STRUCTURE_CHAPTER7_SEARCHALGORITHMS_H_
